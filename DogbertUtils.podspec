@@ -6,10 +6,6 @@ Pod::Spec.new do |spec|
   spec.author = {
     'Alexandr Barenboym' => 'alexandr.barenboym@gmail.com'
   }
-  spec.source = {
-    :git => 'https://github.com/StDogbert/DogbertUtils.git',
-    :tag => spec.version.to_s
-  }
   # spec.requires_arc = true
   spec.default_subspec = 'Empty'
   
@@ -17,9 +13,11 @@ Pod::Spec.new do |spec|
     # empty subspec for default
   end
   
-  spec.subspec 'Alamofire_SwiftyJSON3_0' do |alamofire_swiftyjson3_0|
-    alamofire_swiftyjson3_0.dependency 'Alamofire', '~> 3.0'
-    alamofire_swiftyjson3_0.dependency 'SwiftyJSON', '~> 2.3'
-    alamofire_swiftyjson3_0.source_files = 'Alamofire_SwiftyJSON3_0/*.{swift}', 'Alamofire_SwiftyJSON3_0/**/*.{swift}'
+  spec.subspec 'Alamofire_SwiftyJSON3_0' do |asj3|
+    asj3.dependency 'Alamofire', '~> 3.0'
+    asj3.dependency 'SwiftyJSON', '~> 2.3'
+    asj3.source_files = 
+      'asj3.0/*.{swift}', 
+      'asj3.0/**/*.{swift}'
   end
 end
