@@ -6,9 +6,6 @@ Pod::Spec.new do |spec|
   spec.author = {
     'Alexandr Barenboym' => 'alexandr.barenboym@gmail.com'
   }
-  spec.source = {
-    :git => 'https://github.com/StDogbert/DogbertUtils.git'
-  }
   # spec.requires_arc = true
   spec.default_subspec = 'Empty'
   
