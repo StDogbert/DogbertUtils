@@ -3,15 +3,13 @@ Pod::Spec.new do |spec|
   spec.version      = '1.0.0'
   spec.summary      = 'Utils pod'
   spec.license      = "None"
-  spec.author = {
+  spec.homepage     = 'https://github.com/StDogbert/DogbertUtils'
+  spec.source       = { :git => 'https://github.com/StDogbert/DogbertUtils.git'}
+  spec.authors = {
     'Alexandr Barenboym' => 'alexandr.barenboym@gmail.com'
   }
   # spec.requires_arc = true
-  spec.default_subspec = 'Empty'
-  
-  spec.subspec 'Empty' do |empty|
-    # empty subspec for default
-  end
+  spec.default_subspec = 'Alamofire_SwiftyJSON3_0'
   
   spec.subspec 'Alamofire_SwiftyJSON3_0' do |asj3|
     asj3.dependency 'Alamofire', '~> 3.0'
