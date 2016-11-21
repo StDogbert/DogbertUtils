@@ -16,7 +16,7 @@ extension Request {
         return ResponseSerializer { _, _, data, error in
             guard error == nil else { return .Failure(error!) }
             
-            guard let validData = data where validData.length > 0 else {
+            guard let validData = data, validData.length > 0 else {
                 let failureReason = "JSON could not be serialized. Input data was nil or zero length."
                 let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
                 return .Failure(error)
@@ -32,7 +32,7 @@ extension Request {
     }
     
     public func responseSwiftyJSON(
-        options options: NSJSONReadingOptions = .AllowFragments,
+        options options: JSONSerialization.ReadingOptions = .AllowFragments,
         completionHandler: Response<JSON, NSError> -> Void)
         -> Self
     {
@@ -42,4 +42,3 @@ extension Request {
         )
     }
 }
-
