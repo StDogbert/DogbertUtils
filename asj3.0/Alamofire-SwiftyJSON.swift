@@ -11,14 +11,17 @@ import SwiftyJSON
 extension DataRequest {
     public static func SwiftyJSONResponseSerializer(
         options options: JSONSerialization.ReadingOptions = .allowFragments)
-        -> DataResponseSerializer<Any>
+        -> DataResponseSerializer<JSON>
     {
         return DataResponseSerializer { _, response, data, error in
             guard error == nil else { return .failure(error!) }
             
             let emptyDataStatusCodes: Set<Int> = [204, 205]
             
-            if let response = response, emptyDataStatusCodes.contains(response.statusCode) { return .success(NSNull()) }
+            if let response = response, emptyDataStatusCodes.contains(response.statusCode)
+            {
+                return .success(JSON(NSNull()))
+            }
             
             guard let validData = data, validData.count > 0 else {
                 return .failure(AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength))
@@ -36,7 +39,7 @@ extension DataRequest {
     public func responseSwiftyJSON(
         queue: DispatchQueue? = nil,
         options: JSONSerialization.ReadingOptions = .allowFragments,
-        completionHandler: @escaping (DataResponse<Any>) -> Void)
+        completionHandler: @escaping (DataResponse<JSON>) -> Void)
         -> Self
     {
         return response(
