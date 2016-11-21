@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name         = 'DogbertUtils'
-  spec.version      = '1.0.0'
+  spec.version      = '1.0.1'
   spec.summary      = 'Utils pod'
   spec.license      = "None"
   spec.homepage     = 'https://github.com/StDogbert/DogbertUtils'
