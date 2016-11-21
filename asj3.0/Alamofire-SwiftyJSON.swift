@@ -8,36 +8,40 @@
 import Alamofire
 import SwiftyJSON
 
-extension Request {
+extension DataRequest {
     public static func SwiftyJSONResponseSerializer(
-        options options: NSJSONReadingOptions = .AllowFragments)
-        -> ResponseSerializer<JSON, NSError>
+        options options: JSONSerialization.ReadingOptions = .allowFragments)
+        -> DataResponseSerializer<Any>
     {
-        return ResponseSerializer { _, _, data, error in
-            guard error == nil else { return .Failure(error!) }
+        return DataResponseSerializer { _, response, data, error in
+            guard error == nil else { return .failure(error!) }
             
-            guard let validData = data, validData.length > 0 else {
-                let failureReason = "JSON could not be serialized. Input data was nil or zero length."
-                let error = Error.errorWithCode(.JSONSerializationFailed, failureReason: failureReason)
-                return .Failure(error)
+            let emptyDataStatusCodes: Set<Int> = [204, 205]
+            
+            if let response = response, emptyDataStatusCodes.contains(response.statusCode) { return .success(NSNull()) }
+            
+            guard let validData = data, validData.count > 0 else {
+                return .failure(AFError.responseSerializationFailed(reason: .inputDataNilOrZeroLength))
             }
             
-            let json:JSON = SwiftyJSON.JSON(data: validData)
+            let json: JSON = SwiftyJSON.JSON(data: validData)
             if let jsonError = json.error {
-                return Result.Failure(jsonError)
+                return .failure(jsonError)
             }
             
-            return Result.Success(json)
+            return .success(json)
         }
     }
     
     public func responseSwiftyJSON(
-        options options: JSONSerialization.ReadingOptions = .AllowFragments,
-        completionHandler: Response<JSON, NSError> -> Void)
+        queue: DispatchQueue? = nil,
+        options: JSONSerialization.ReadingOptions = .allowFragments,
+        completionHandler: @escaping (DataResponse<Any>) -> Void)
         -> Self
     {
         return response(
-            responseSerializer: Request.SwiftyJSONResponseSerializer(options: options),
+            queue: queue,
+            responseSerializer: DataRequest.SwiftyJSONResponseSerializer(options: options),
             completionHandler: completionHandler
         )
     }
