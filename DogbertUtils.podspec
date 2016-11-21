@@ -12,8 +12,8 @@ Pod::Spec.new do |spec|
   spec.default_subspec = 'Alamofire_SwiftyJSON3_0'
   
   spec.subspec 'Alamofire_SwiftyJSON3_0' do |asj3|
-    asj3.dependency 'Alamofire', '~> 3.0'
-    asj3.dependency 'SwiftyJSON', '~> 2.3'
+    asj3.dependency 'Alamofire'
+    asj3.dependency 'SwiftyJSON'
     asj3.source_files = 
       'asj3.0/*.{swift}', 
       'asj3.0/**/*.{swift}'
